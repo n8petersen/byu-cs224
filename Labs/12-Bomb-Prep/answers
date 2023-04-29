@@ -1,0 +1,21 @@
+What are the contents of %rdx?
+3
+
+What are the contents of %r10 in hexadecimal?
+0x13
+
+What are the contents of %r11?
+0x2 = 2
+
+What value is stored on the stack? What does that value mean? 
+Hint: scroll down in the assembly code and see if you see that value somewhere
+mov    %eax,-0x2c(%rbp)
+this is where the PC will return to after the 'fun' call is complete.
+
+What value is put in %rax? What value is on top of the stack?
+0x7 = 7
+
+The program will pause after the ret instruction is executed.
+Looking at the assembly window, we are back in main.
+What value was returned by fun in register %rax?
+0x7a8 = 1960

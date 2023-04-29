@@ -1,0 +1,53 @@
+1a
+1b
+1c  724428fb            (wrong)(mixed up 4 and f, should be 7244284b)
+1d
+1e
+1f
+2a
+2b                      (wrong, it didn't copy the leading 0 for some reason)
+2c  39547349             
+2d
+2e
+2f  41672139547349
+3a  01000010        
+3b  01100011        
+3c  20555942
+3d  U
+3e  BYU cs is cool!     
+3f  6920736320555942    (wrong)     
+4a
+3b
+4c  6f685326            (wrong)
+4d
+4e
+4f  756f6853267369      (wrong)
+5a
+5b
+5c  46395f68            (wrong)
+5d
+5e
+5f  6a3f0046395f6839
+6a
+6b
+6c  6532703b            (wrong)
+6d
+6e
+6f  6d4c3532703b7024    (wrong)
+7a
+7b
+7c  21694878
+7d
+7e
+7f
+8a
+8b
+8c  3e683442            (wrong)
+8d  U                   (wrong)
+8e
+8f  5a3e683442794b34
+9
+10a
+10b
+10c
+11

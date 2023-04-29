@@ -1,0 +1,35 @@
+helpful commands:
+    'info frame' will show some helpful info, including where your input is being placed
+    'x/30x <address>' will show the 30 memory locations after the input address
+
+
+phase 1:
+ - input starts at 0x5566528 and the location of the return address is at 0x556654550
+ - 40 bytes of garbage needs to be input before the address
+ - the address it naturally goes to is 0x00401a1e, we want to replace this with 0x00401843
+ - put it in backwards after 40 characters of garbage.
+ - WORKS :)
+
+ phase 2:
+ - phase2 function starts at 0x40186f
+ - we need to put our "cookie" into $rdi, so it will compare and validate.
+ - if it doesn't validate, it will skip over the validate function, and instead hit the fail function
+ - our cookie is value 0x597a076a
+ - $rdi is currently 0xfbad2088 when that compare is called.
+ - rsp is at 0x55665428
+ - WORKS :)
+ 
+ phase 3:
+ - total bytes before the cookie = buffer + 8 bytes (ret add of rsp) + 8 bytes (touch3 add)
+ - 0x28 + 0x8 + 0x8 = 0x38 bytes (56 in decimal)
+ - rsp is at 0x55665428
+ - add 0x38 to the rsp = 0x55665460
+ - the cookie converted to ascii representation is:
+    35 39 37 61 30 37 36 61
+
+
+phase 4:
+- gadget 1 is at 0x401a47
+- cookie is 0x5971076a
+- gadget 2 is at 0x401a5b
+- touch 2 address is at 0x40186f

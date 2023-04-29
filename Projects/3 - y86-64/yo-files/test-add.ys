@@ -1,0 +1,17 @@
+irmovq $5, %rsi
+irmovq $12, %rax
+addq %rsi, %rax      # 12 + 5 = 17
+                               
+irmovq $-5, %rdi
+irmovq $-12, %rcx
+addq %rdi, %rcx      # -12 + -5 = -17 (SF)
+                               
+irmovq $0x8000000000000000, %rdx
+addq %rdx, %rdx     # Tmin + Tmin = 0 (ZF, OF)
+                               
+irmovq $0x7fffffffffffffff, %rbx
+addq %rbx, %rbx     # Tmax + Tmax = -2 (SF, OF)
+                               
+halt
+                               
+

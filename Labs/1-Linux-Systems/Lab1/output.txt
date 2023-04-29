@@ -1,0 +1,4 @@
+My name is Nathan Petersen
+The first number is 270
+The second number is 289
+The result is 224
