@@ -1,0 +1,185 @@
+3.58
+    long decode2(long x, long y, long z) {
+        y = y - z;
+        x = x * y;
+        long ans = y;
+        ans = ans << 63;
+        ans = ans >> 63;
+        ans = ans ^ y;
+        return ans;
+    }
+
+
+3.60
+    A 
+        i       %rdi
+        ii      %esi
+        iii     #rax
+        iv      %rdx
+    B   result = 0
+        mask = 1
+
+    C   mask is non-zero
+    D   mask = mask << n
+    E   result = result | (x & mask) 
+
+    F
+        long loop(long x, long n) {
+            long result = 0;
+            long mask;
+            for (mask = 1; mask != 0; mask = mask << n) {
+                result |= mask & x;
+            }
+            return result;
+        }
+
+3.65
+    A   %rdx
+    B   %rax 
+    C   15
+    D   
+
+3.66
+    NR = 3n
+    NC = 4n+1
+
+3.67
+    A
+        104  +------------------+
+             |                  |
+             |                  |
+             |                  |
+             |                  |
+             |                  |
+             |                  |
+             |                  |
+             |                  |
+         64  +------------------+ <-- %rdi
+             |                  |
+             |                  |
+             |                  |
+             |                  |
+             |                  |
+             |                  |
+         32  +------------------+
+             |         z        |
+         24  +------------------+
+             |        &z        |
+         16  +------------------+
+             |         y        |
+          8  +------------------+
+             |         x        |
+          0  +------------------+ <-- %rsp
+
+
+    B    %rdi, or in other words %rsp+64
+
+
+    C   it uses %rsp, with whatever offset it needs to access the various elements of struct s
+
+    D   sets register values to contents at memory locations using %rsp (struct s) with offset, and then sets the memory locations at %rdi with offset.
+
+    E
+        104  +------------------+
+             |                  |
+             |                  |
+             |                  |
+             |                  |
+             |                  |
+             |                  |
+         88  +------------------+
+             |        z         |
+         80  +------------------+
+             |        x         |
+         72  +------------------+
+             |        y         |
+         64  +------------------+ <-- %rdi(eval pass in)
+             |                  |  \
+             |                  |   -- %rax(process pass out)
+             |                  |
+             |                  |
+             |                  |
+             |                  |
+         32  +------------------+
+             |         z        |
+         24  +------------------+
+             |        &z        |
+         16  +------------------+
+             |         y        |
+          8  +------------------+
+             |         x        |
+          0  +------------------+ <-- %rsp in eval
+             |                  |
+         -8  +------------------+ <-- %rsp in process
+
+
+    F   The calling function allocates space on the stack, then passes the starting address of the stack to the called function. The called function stores data in the stack, and then returns the address.
+
+
+3.68
+    # void setVal(str1* p, str2* q)
+    # p in %rdi, q in %rsi
+    setVal:
+        # 8(%rsi) fetch q->t, int t is aligned by 4, so 4 < B <=8
+        movslq 8(%rsi), %rax
+
+        # 32(%rsi) fetch q->u, long u is aligned by 8
+        # offset q->s is offset q->t + 4, so 24 < 12 + A*2 <= 32
+        addq 32(%rsi), %rax
+
+        # 184(%rdi) fetch p->v, long y is aligned by 8, so 176 < A*B*4 <= 184
+        movq %rax, 184(%rdi)
+        ret
+
+    4 < B <= 8
+    5 < A <= 10
+    44 < A*B <= 46
+
+    A = 9
+    B = 5
+
+
+
+3.64 (extra credit)
+
+        .section .data
+        .global A
+        A:
+        .fill 3640/8, 8, 121 # fill data 121
+
+        .section .text
+        .global store_ele
+        # long store_ele(long i, long j, long k, long *dest)
+        # i in %rdi, j in %rsi, k in %rdx, dest in %rcx
+        store_ele:
+        leaq (%rsi, %rsi, 2), %rax    # t1 = j*3
+        leaq (%rsi, %rax, 4), %rax    # t1 = j*13
+        movq %rdi, %rsi               # t2 = i
+        salq $6, %rsi                 # t2 = i*64
+        addq %rsi, %rdi               # t3 = i*65
+        addq %rax, %rdi               # t3 = i*65 + j*13
+        addq %rdi, %rdx               # t4 = i*65 + j*13 + k
+        movq A(,%rdx,8), %rax         # t1 = *(A + 8*t4)
+        movq %rax, (%rcx)             # *dest = t1
+        movl $3640, %eax              # return 3640
+        ret
+
+
+    T D[R][C];
+    &D[i][j] = Xd + L(C*i + j)
+    T means type, D means data, R means row, C means column
+    L means sizeof(T), Xd means address of D
+
+    A
+        TYPE D[R][S][T]
+        &D[i][j][k] = Xd + L(S*T*i + T*j + k)
+
+    B
+        S * T = 65
+        T = 13
+        8*R*S*T = 3640
+
+        so:
+        R = 7
+        S = 5
+        T = 13
